@@ -56,7 +56,6 @@ void radixSort(vector<int>& arr) {
 void gnomeSort(vector<int>& arr) {
 	int n = arr.size();
 	int index = 0;
-
 	while (index < n) {
 		if (index == 0) {
 			index++;
@@ -162,13 +161,26 @@ int main() {
 	for (int i = 0; i < arr1.size(); i++) {
 		cout << arr1[i] << ' ';
 	}
-	for (int i = 1; i < 8; i++) { // this is where the fun begins, проверка на время
+	for (int i = 1; i < 6; i++) { // this is where the fun begins, проверка на время
 		cout << endl << "current array len: " << pow(10, i) << endl;
 		genArr(arr1, pow(10, i), 1, pow(10, i));
 		cout << "gnome exec time: " << measure_exec_time(gnomeSort, arr1) << " microseconds" << endl;
 		genArr(arr1, pow(10, i), 1, pow(10, i));
 		cout << "radix exec time: " << measure_exec_time(radixSort, arr1) << " microseconds" << endl;
 		genArr(arr1, pow(10, i), 1, pow(10, i));
+		cout << "qS exec time: " << measure_exec_time(quickSort, arr1, 0, arr1.size() - 1) << " microseconds" << endl;
+	}
+	for (int i = 2; i < 6; i++) { // размеры более 10^5 * 2 это смерть для гнома, поэтому далее с таким размером считаем
+		int len = 100000 * i;
+		cout << endl << "current array len: " << len << endl;
+		if (i == 2) {
+			genArr(arr1, len, 1, len);
+			cout << "ONLY FOR THIS LENGTH gnome exec time: " << measure_exec_time(gnomeSort, arr1) << " microseconds" << endl;
+
+		}
+		genArr(arr1, len, 1, len);
+		cout << "radix exec time: " << measure_exec_time(radixSort, arr1) << " microseconds" << endl;
+		genArr(arr1, len, 1, len);
 		cout << "qS exec time: " << measure_exec_time(quickSort, arr1, 0, arr1.size() - 1) << " microseconds" << endl;
 	}
 }
